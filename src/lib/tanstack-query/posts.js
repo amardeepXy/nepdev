@@ -81,12 +81,18 @@ export const useUpdatePost = () =>{
     })
 }
 
-export const useGetPopularPost = () => {
+export const useGetPopularPost = (isEnabled) => {
+    console.log('why i am being called this much time');
     return useInfiniteQuery({initialPageParam: 1, queryKey: [QUERY_KEYS.GET_INFINITE_POSTS], 
         queryFn: getPopularPost, 
         getNextPageParam: (lastpage) => {
-            if(lastpage && lastpage.documents.length === 0) null;
+            console.log(lastpage.documents, Date.now().toString());
+            if(lastpage.documents.length == 0){
+                return null;
+            };
             return lastpage.documents[lastpage.documents.length - 1].$id;
-        } 
+        },
+        enabled: isEnabled,
+        staleTime: 1500
     })
 }

@@ -1,13 +1,31 @@
 import { ChevronLeft, Filter, SearchIcon } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui";
 import { useGetPopularPost } from "@/lib/tanstack-query/posts";
+import GridPostList from "@/components/shared/GridPostList";
 
 const Explore = () => {
-  const {data: popularPost, isFetchingNextPage: isFetchingNextPopularPost, isLoading: isLoadingPopularPost} = useGetPopularPost();
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
+  const {
+    data: popularPosts,
+    isFetchingNextPage: isFetchingNextPopularPost,
+    isLoading: isLoadingPopularPost,
+    hasNextPage: hasNextpopularPage,
+    fetchNextPage,
+  } = useGetPopularPost(!!!searchText);
 
-
+  useEffect(() => {
+    console.log({
+      popularPosts,
+      isFetchingNextPopularPost,
+      isLoadingPopularPost,
+      hasNextpopularPage,
+    });
+    if (hasNextpopularPage) {
+      console.log("wtf");
+    }
+  }, [popularPosts, isFetchingNextPopularPost, isLoadingPopularPost]);
+  console.log("how much time i am being called");
   return (
     <div className="explore-container">
       <div className="flex-start self-start">
@@ -23,7 +41,7 @@ const Explore = () => {
           className="explore-search flex-1 focus:border-none"
           placeholder="Search"
           value={searchText}
-          onChange={e => setSearchText(e.target.value)}
+          onChange={(e) => setSearchText(e.target.value)}
         />
       </div>
 
@@ -34,6 +52,20 @@ const Explore = () => {
             <Filter className="size-5 md:size-6.5" />
           </Button>
         </div>
+
+        {/* Content (popular or search) */}
+
+        {!searchText &&
+          // Loading state of popular posts
+          (isLoadingPopularPost ? (
+            <div className="w-full h-full flex-center">
+              <img src="/assets/animation/loading.gif" alt="loading" />
+            </div>
+          ) : (
+            popularPosts.pages.map((page) => (
+              <GridPostList postsList={page.documents} key={Date.now()} />
+            ))
+          ))}
       </div>
     </div>
   );

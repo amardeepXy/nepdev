@@ -14,7 +14,7 @@ import App from "./App";
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
-  <React.StrictMode>
+ 
   <BrowserRouter>
     <ReduxProvider store={store}>
       <QueryProvider>
@@ -22,5 +22,4 @@ ReactDOM.createRoot(root).render(
       </QueryProvider>
     </ReduxProvider>
   </BrowserRouter>
-  </React.StrictMode>
 );

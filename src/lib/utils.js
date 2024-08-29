@@ -30,3 +30,7 @@ export function timeAgo(dateString) {
       return secondsAgo === 1 ? "1 second ago" : `${secondsAgo} seconds ago`;
   }
 }
+
+export function inArray(arr, elem){
+    return arr.find( arrElem => arrElem === elem);
+}

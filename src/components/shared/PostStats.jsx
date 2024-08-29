@@ -6,8 +6,9 @@ import { useLikePost, useSavePost } from "@/lib/tanstack-query/posts";
 import { useGetUserFromDb } from "@/lib/tanstack-query/account";
 import { useToast, ToastAction } from "../ui";
 import { Button } from "../ui";
+import { inArray } from "@/lib/utils";
 
-const PostStats = ({ post }) => {
+const PostStats = ({ post, toHide=[] }) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -98,17 +99,17 @@ const PostStats = ({ post }) => {
 
   return (
     <div className="flex justify-between py-2">
-      <Button variant="ghost" className="shad-btn_ghost" onClick={handleLikePost}>
+      <Button variant="ghost" className={`shad-btn_ghost ${inArray(toHide, 1) === 1 && 'hidden'}`} onClick={handleLikePost}>
         <Heart width={22} fill={hasLikedPost() ? "black" : "none"} className="dark:invert-white" />
         <span className="ml-1.5 text-xl">{postLikers.length}</span>
       </Button>
 
-      <Button variant="ghost" className="shad-btn_ghost">
+      <Button variant="ghost" className={`shad-btn_ghost ${inArray(toHide, 2) ===2 && 'hidden'}`}>
         <MessageCircleMore />
         <span className="ml-1.5 text-xl">{post.comment?.length}</span>
       </Button>
 
-      <Button variant="ghost" className="shad-btn_ghost" onClick={handleSavePost}>
+      <Button variant="ghost" className={`shad-btn_ghost ${inArray(toHide, 3) === 3 && 'hidden'}`} onClick={handleSavePost}>
         <img
           src={`/assets/icons/${isSaved ? "saved" : "save"}.svg`}
           alt="save-icon"
@@ -117,7 +118,7 @@ const PostStats = ({ post }) => {
      
       </Button>
 
-      <Button variant="ghost" className="shad-btn_ghost">
+      <Button variant="ghost" className={`shad-btn_ghost ${inArray(toHide, 4) === 4 && 'hidden'} `}>
         <Forward />
       </Button>
     </div>
@@ -125,3 +126,4 @@ const PostStats = ({ post }) => {
 };
 
 export default PostStats;
+

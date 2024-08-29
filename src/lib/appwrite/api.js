@@ -275,15 +275,17 @@ export async function updatePostById(postId, updatedData, prevData){
     }
 }
 
-export async function getPopularPost(pageParam){
-    const queries = [Query.orderAsc('$updatedAt'), Query.limit(10)];
-    if(pageParam){
-        queries.push(Query.cursorAfter(String.toString(pageParam)));
+export async function getPopularPost({pageParam}){
+    const queries = [Query.orderDesc('$updatedAt'), Query.limit(10)];
+    if(typeof pageParam !== 'number'){
+        console.log(pageParam);
+        queries.push(Query.cursorAfter(pageParam.toString()));
     }
     
     try {
         return await database.listDocuments(databaseId, postsCollectionID, queries);
     } catch (error) {
+        console.log(error);
         throw new Error(error.message || 'Error in getting infinite post' );
     }
 }
