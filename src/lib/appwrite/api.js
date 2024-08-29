@@ -274,3 +274,16 @@ export async function updatePostById(postId, updatedData, prevData){
         throw new Error(error);
     }
 }
+
+export async function getPopularPost(pageParam){
+    const queries = [Query.orderAsc('$updatedAt'), Query.limit(10)];
+    if(pageParam){
+        queries.push(Query.cursorAfter(String.toString(pageParam)));
+    }
+    
+    try {
+        return await database.listDocuments(databaseId, postsCollectionID, queries);
+    } catch (error) {
+        throw new Error(error.message || 'Error in getting infinite post' );
+    }
+}

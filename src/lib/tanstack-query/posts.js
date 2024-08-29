@@ -1,5 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { createPost, getPostById, getRecentPost, likePost, savePost, updatePostById } from '../appwrite/api';
+import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query';
+import { createPost, getPopularPost, getPostById, getRecentPost, likePost, savePost, updatePostById } from '../appwrite/api';
 import { QUERY_KEYS } from './queryKeys';
 
 const { GET_RECENT_POSTS, GET_POST_BY_ID, GET_POSTS, GET_CURRENT_USER } = QUERY_KEYS;
@@ -78,5 +78,15 @@ export const useUpdatePost = () =>{
             queryClient.invalidateQueries({queryKey: [ QUERY_KEYS.GET_POST_BY_ID, data.$id]});
             queryClient.invalidateQueries({queryKey: [ QUERY_KEYS.GET_RECENT_POSTS]})
         }
+    })
+}
+
+export const useGetPopularPost = () => {
+    return useInfiniteQuery({initialPageParam: 1, queryKey: [QUERY_KEYS.GET_INFINITE_POSTS], 
+        queryFn: getPopularPost, 
+        getNextPageParam: (lastpage) => {
+            if(lastpage && lastpage.documents.length === 0) null;
+            return lastpage.documents[lastpage.documents.length - 1].$id;
+        } 
     })
 }

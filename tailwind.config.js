@@ -61,8 +61,8 @@ module.exports = {
         "dark-3": "#121329",
         "dark-4": "#1F1F22",
         "light-1": "#FFFFFF",
-        "light-2": "#F5F5F5",
-        "light-3": "#7878A3",
+        "light-2": "#d0cdcd",
+        "light-3": "#c9c5c5",
         "light-4": "#5C5C7B",
       },
       fontFamily: {
