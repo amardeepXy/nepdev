@@ -285,7 +285,41 @@ export async function getPopularPost({pageParam}){
     try {
         return await database.listDocuments(databaseId, postsCollectionID, queries);
     } catch (error) {
-        console.log(error);
         throw new Error(error.message || 'Error in getting infinite post' );
+    }
+}
+
+export async function searchPosts(pageParam, searchTerm){
+
+    const queries = [Query.search('caption', searchTerm), Query.limit(15)]
+    console.log(searchTerm, pageParam);
+    if(pageParam){
+        console.log('i am also runnig')
+        queries.push(Query.cursorAfter(pageParam));
+    }
+    
+    try {
+        return await database.listDocuments(databaseId, postsCollectionID, queries);
+    } catch (error) {
+        console.log(error);
+        throw new Error(error.message);
+    }
+}
+
+export async function getSavedPost(userId){
+    if(!userId) throw new Error('must need user id to get saved post -Client error');
+    try {
+        return await database.listDocuments(databaseId, savesCollectionID, [Query.equal('savedBy', userId)]);
+    } catch (error) {
+        console.log(error);
+        throw new Error(error.message);
+    }
+}
+
+export async function getAllUsers(){
+    try {
+        return await database.listDocuments(databaseId, usersCollectionID);
+    } catch (error) {
+        throw new Error(error.message);
     }
 }

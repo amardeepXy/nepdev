@@ -142,7 +142,7 @@ import { Loader } from "lucide-react";
           </FormItem>
         )}
       />
-      <Button disabled={action === 'UPDATE'? !form.formState.isDirty || isUpdating : isCreating} type="submit">{ isCreating || isUpdating? <Loader className="h-full" /> : action === 'UPDATE'? 'Update': 'Create'}</Button>
+      <Button disabled={action === 'UPDATE'? !form.formState.isDirty || isUpdating : isCreating} type="submit">{ isCreating || isUpdating? <Loader className="h-full animate-spin duration-1000" /> : action === 'UPDATE'? 'Update': 'Create'}</Button>
     </form>
   </Form>
   )

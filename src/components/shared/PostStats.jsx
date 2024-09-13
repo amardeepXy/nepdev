@@ -33,7 +33,6 @@ const PostStats = ({ post, toHide=[] }) => {
   }, [ isAuthenticated, savedPostRecord]);
 
   useEffect(() => {
-    console.log(savedPostData);
       if(isPostSaved && savedPostData?.$id){
           setSavedPostRecord(savedPostData);
       }else if(isPostSaveError && postSaveError){

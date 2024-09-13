@@ -10,20 +10,21 @@ const EditPost = () => {
     const navigate = useNavigate();
     const { toast } = useToast();
     const { data: postData, isLoading: isGettingPost, isError: isGettingPostError, error: gettingPostError } = useGetPostById(postId);
-    const {auth: {isAutheticated, isLoading, user} } = useSelector(state => state);
+    const { isAuthenticated, isLoading, user } = useSelector(state => state.auth);
+    console.log(user, isAuthenticated);
 
     useEffect(()=> {
-        if(!isLoading && isAutheticated){
+        if(!isLoading && !isAuthenticated){
             toast({title: 'Login to access this page'});
             navigate('/sign-in');
         }else if(!isLoading && !isGettingPost){
-            if(user.$id !== postData.postedBy){
+            if(user.$id !== postData.postedBy.$id){
                 toast({title: 'you are not authorised to access this page'});
-                navigate('/');
+                navigate('/'); 
             }
                
         }
-    }, [isAutheticated, user, postData, isGettingPost, isLoading]);
+    }, [isAuthenticated, user, postData, isGettingPost, isLoading]);
 
 
     if(isGettingPost){

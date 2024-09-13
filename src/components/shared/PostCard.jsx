@@ -4,18 +4,20 @@ import { BeerIcon, LucideEdit2, LucideForward } from "lucide-react";
 import { timeAgo } from "@/lib/utils";
 import { PostStats } from './'
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, styles }) => {
   const navigate = useNavigate();
   const [optionsVisible, setOptionsVisible] = useState(false);
   const optionsRef = useRef(null);
   const shouldPreventLinkClick = useRef(false); // Use ref to prevent link click
 
+  // toggle option
   const toggleOptions = useCallback((event) => {
     event.stopPropagation(); // Prevent event propagation to document level
     setOptionsVisible((prevState) => !prevState);
     shouldPreventLinkClick.current = true;
   }, []);
 
+  // outside of option click handle when option is visible
   const handleClickOutside = useCallback((event) => {
     if (optionsRef.current && !optionsRef.current.contains(event.target)) {
       setOptionsVisible(false);
@@ -23,6 +25,7 @@ const PostCard = ({ post }) => {
     }
   }, []);
 
+  // option click handle
   const handleLinkClick = useCallback(
     (event) => {
       if (optionsVisible) {
@@ -34,6 +37,7 @@ const PostCard = ({ post }) => {
     [optionsVisible]
   );
 
+  // Option click handle
   useEffect(() => {
     const handleDocumentClick = (event) => {
       if (optionsRef.current && !optionsRef.current.contains(event.target)) {
@@ -57,10 +61,10 @@ const PostCard = ({ post }) => {
   }
 
   return (
-    <div className="post-card p-1 sm:p-4 bg-white shadow-md rounded-lg md:w-auto w-full mb-4 relative">
-      <div className="flex justify-between items-center">
+    <div className={`post-card p-1 sm:p-4 bg-white shadow-md rounded-lg mb-4 relative ${styles}`}>
+      <div className="flex w-[100%] justify-between items-center">
         <Link
-          to={`/user/${post.postedBy.$id}`}
+          to={`/user/${post?.postedBy?.$id}`}
           className="flex items-center gap-2"
           onClick={(event) => {
             if (shouldPreventLinkClick.current) {
@@ -128,7 +132,7 @@ const PostCard = ({ post }) => {
         <p className="body-regular py-2 text-base leading-5 sm:leading-6 font-semibold dark:text-zinc-100 text-gray-800 ">
           {post.caption}
         </p>
-        <p className="text-xs sm:text-sm dark:text-zinc-300 text-gray-600">
+        <p className="text-sm dark:text-zinc-300 text-gray-600">
           {post.tags?.map((tag) => `#${tag} `)}
         </p>
       </div>

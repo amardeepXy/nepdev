@@ -1,4 +1,4 @@
-import { createUserAccount, signInUser, getAccount, logout, getUserFromDb } from '../appwrite/api';
+import { createUserAccount, signInUser, getAccount, logout, getUserFromDb, getAllUsers } from '../appwrite/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from './queryKeys';
 
@@ -44,5 +44,13 @@ export const useGetUserFromDb = () => {
             console.log("error");
         },
         staleTime: 60* 1000 * 15,
+    })
+}
+
+export const useGetAllUsers = () => {
+    return useQuery({
+        queryKey: [QUERY_KEYS.GET_USERS],
+        queryFn: () => getAllUsers(),
+        staleTime: 1000 * 60 * 2
     })
 }

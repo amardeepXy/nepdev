@@ -162,6 +162,10 @@
     background: #7878a3;
   }
 
+  .bg-size-150vw{
+    background-size: 150vh;
+  }
+
   .common-container {
     @apply flex flex-col flex-1 items-center gap-8 py-6 px-2 md:px-8 overflow-y-scroll lg:p-14 dark:text-light-1 text-dark-1 custom-scrollbar;
   }
@@ -172,7 +176,7 @@
   }
 
   .user-grid {
-    @apply w-full grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7 max-w-5xl;
+    @apply w-full grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7 max-w-5xl p-5;
   }
 
   /* Explore */
@@ -242,7 +246,7 @@
 
   /* Bottom bar */
   .bottom-bar {
-    @apply z-50 flex-between w-full sticky bottom-0 rounded-t-[20px] bg-light-2 dark:text-light-1 text-dark-1 dark:bg-dark-2 px-5 py-4 md:hidden;
+    @apply z-50 flex-between w-full sticky bottom-0 rounded-t-[20px] bg-light-2/85 backdrop-blur-sm dark:text-light-1 text-dark-1 dark:bg-dark-2/85 px-5 py-4 md:hidden;
   }
 
   /* File uploader */
@@ -282,7 +286,7 @@
 
   /* Post Card */
   .post-card {
-    @apply bg-gray-50 dark:bg-dark-1 rounded-3xl border border-gray-50 dark:border-dark-4 p-5 lg:p-7 w-full max-w-screen-sm;
+    @apply bg-gray-50 dark:bg-dark-1 rounded-3xl border border-gray-50 dark:border-dark-4 p-5 lg:p-7 w-full;
   }
 
   .post-card_img {
@@ -292,11 +296,6 @@
   /* Topbar */
   .topbar {
     @apply sticky top-0 z-50 md:hidden bg-light-2 dark:bg-dark-2 w-full;
-  }
-
-  /* User card */
-  .user-card {
-    @apply flex-center flex-col gap-4 border border-dark-4 rounded-[20px] px-5 py-8;
   }
 
   /* Login Header */
@@ -309,9 +308,13 @@
   }
 
   .backdrop-blur{
-    @apply bg-zinc-200/65 dark:bg-zinc-800/65 backdrop:blur-md
+    @apply bg-zinc-200/65 dark:bg-zinc-800/65 backdrop:blur-md;
   }
   
+  .user-card{
+    @apply bg-size-150vw rounded-lg bg-cover bg-no-repeat bg-center;
+  }
+
 }
 
 @layer components {

@@ -1,19 +1,29 @@
-import { ChevronLeft, Filter, SearchIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft, Filter, Loader, SearchIcon, SearchX } from "lucide-react";
 import { Button } from "@/components/ui";
-import { useGetPopularPost } from "@/lib/tanstack-query/posts";
+import { useGetPopularPost, useSearchPost } from "@/lib/tanstack-query/posts";
 import GridPostList from "@/components/shared/GridPostList";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const Explore = () => {
   const [searchText, setSearchText] = useState("");
+  const debounceSearchText = useDebounce(searchText, 500);
   const {
     data: popularPosts,
     isFetchingNextPage: isFetchingNextPopularPost,
     isLoading: isLoadingPopularPost,
     hasNextPage: hasNextpopularPage,
     fetchNextPage,
-  } = useGetPopularPost(!!!searchText);
-
+  } = useGetPopularPost(!debounceSearchText);
+  const {
+    data: searchedPost,
+    isFetchingNextPage: isFetchingNextSearchedPost,
+    isError: isSearchError,
+    error: searchError,
+    hasNextPage: hasNextSearchPostPage,
+  } = useSearchPost(debounceSearchText);
+  console.log(hasNextSearchPostPage);
   useEffect(() => {
     console.log({
       popularPosts,
@@ -25,15 +35,19 @@ const Explore = () => {
       console.log("wtf");
     }
   }, [popularPosts, isFetchingNextPopularPost, isLoadingPopularPost]);
-  console.log("how much time i am being called");
+  const navigate = useNavigate();
+
   return (
     <div className="explore-container">
+      {/* // * Top Navigation */}
       <div className="flex-start self-start">
-        <Button variant="ghost">
+        <Button variant="ghost" onClick={() => navigate(-1)}>
           <ChevronLeft />
         </Button>
         <h2 className="h3-bold dark:text-light-2 text-dark-3 ">Explore</h2>
       </div>
+
+      {/* //* Search Bar */}
       <div className="w-full px-3 gap-4 flex-start bg-light-3 dark:bg-dark-4 mt-3 rounded-xl">
         <SearchIcon />
         <input
@@ -46,8 +60,9 @@ const Explore = () => {
       </div>
 
       <div className="explore-inner_container">
+        {/* //* Content label */}
         <div className="flex-between w-full px-5">
-          <p className="body-bold md:h3-bold ">Popular</p>
+          <p className="body-bold md:h3-bold ">{ searchedPost? 'Search Result' : 'Popular'}</p>
           <Button variant="ghost">
             <Filter className="size-5 md:size-6.5" />
           </Button>
@@ -55,16 +70,31 @@ const Explore = () => {
 
         {/* Content (popular or search) */}
 
-        {!searchText &&
-          // Loading state of popular posts
-          (isLoadingPopularPost ? (
-            <div className="w-full h-full flex-center">
-              <img src="/assets/animation/loading.gif" alt="loading" />
+        {searchedPost ? searchedPost.pages[0].total === 0 ?
+         <div className='w-full h-full flex-center flex-col gap-3 pt-20 text-foreground/70'>
+          <SearchX className='size-10' />
+          <h2 className='h3-bold'>Not found</h2>
+         </div>
+          :  (
+          searchedPost?.pages.map((postPages) => (
+            <GridPostList postsList={postPages.documents} key={Date.now()} />
+          ))
+        ) : // Loading state of popular posts
+        isLoadingPopularPost ? (
+          <div className="w-full h-full flex-center">
+            <img src="/assets/animation/loading.gif" alt="loading" />
+          </div>
+        ) : (
+          popularPosts.pages.map((page) => (
+            <GridPostList postsList={page.documents} key={Date.now()} />
+          ))
+        )}
+
+        {isFetchingNextSearchedPost ||
+          (isFetchingNextPopularPost && (
+            <div className="w-full p-5">
+              <Loader className="animate-spin duration-1000" />
             </div>
-          ) : (
-            popularPosts.pages.map((page) => (
-              <GridPostList postsList={page.documents} key={Date.now()} />
-            ))
           ))}
       </div>
     </div>
