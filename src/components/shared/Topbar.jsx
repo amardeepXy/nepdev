@@ -32,7 +32,7 @@ const Topbar = () => {
         {
           iconPath: user.imageUrl || "./assets/icons/profile-placeholder.svg",
           title: "Profile",
-          path: `/profile/${user.accountId}`,
+          path: `/user/${user.accountId}`,
         }
       ];
 
