@@ -4,7 +4,7 @@ import Authlayout from './_auth/Authlayout';
 import SigninForm from './_auth/forms/SigninForm';
 import SignupForm from './_auth/forms/SignupForm';
 import RootLayout from './_root/RootLayout';
-import { Home, Explore, Allusers , Saved, CreatePost, EditPost, PostDetails } from './_root/pages';
+import { Home, Explore, Allusers , Saved, CreatePost, EditPost, PostDetails, Profile } from './_root/pages';
 import { useDispatch } from 'react-redux';
 import { setDarkMode as toggleMode } from './lib/redux/features/modeSlice';
 import { Toaster } from './components/ui/toaster';
@@ -38,7 +38,7 @@ const App = () => {
           <Route path='/create-post' element={<CreatePost />} />
           <Route path='/edit/:postId' element={<EditPost />} />
           <Route path='post/:postId' element={<PostDetails/>} />
-
+          <Route path='user/:userId' element={<Profile />} />
         </Route>
       </Routes>
       <Toaster />

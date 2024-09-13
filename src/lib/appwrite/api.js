@@ -323,3 +323,22 @@ export async function getAllUsers(){
         throw new Error(error.message);
     }
 }
+
+export async function getUserById(userId){
+    if(!userId) throw new Error('Need user id to get user account -api.js');
+
+    try {
+        return await database.listDocuments(databaseId, usersCollectionID, [Query.equal('$id', userId)]);
+    } catch (error) {
+        throw new Error(error.message || 'Uknown error');
+    }
+}
+
+// export async function getAllPostOfUser(userId){
+//     if(!userId) throw new Error('Must need user id to get user\'s all post ');
+//     try {
+//         database.listDocuments
+//     } catch (error) {
+        
+//     }
+// }

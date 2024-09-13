@@ -23,7 +23,6 @@ const Explore = () => {
     error: searchError,
     hasNextPage: hasNextSearchPostPage,
   } = useSearchPost(debounceSearchText);
-  console.log(hasNextSearchPostPage);
   useEffect(() => {
     console.log({
       popularPosts,
@@ -82,7 +81,7 @@ const Explore = () => {
         ) : // Loading state of popular posts
         isLoadingPopularPost ? (
           <div className="w-full h-full flex-center">
-            <img src="/assets/animation/loading.gif" alt="loading" />
+            <img src="/assets/animation/loading.gif" alt="loading" className="dark:invert" />
           </div>
         ) : (
           popularPosts.pages.map((page) => (
