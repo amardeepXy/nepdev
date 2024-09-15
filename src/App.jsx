@@ -5,6 +5,7 @@ import SigninForm from './_auth/forms/SigninForm';
 import SignupForm from './_auth/forms/SignupForm';
 import RootLayout from './_root/RootLayout';
 import { Home, Explore, Allusers , Saved, CreatePost, EditPost, PostDetails, Profile } from './_root/pages';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useDispatch } from 'react-redux';
 import { setDarkMode as toggleMode } from './lib/redux/features/modeSlice';
 import { Toaster } from './components/ui/toaster';
@@ -42,6 +43,7 @@ const App = () => {
         </Route>
       </Routes>
       <Toaster />
+    <SpeedInsights />
     </main>
   );
 };
