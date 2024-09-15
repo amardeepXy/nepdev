@@ -46,7 +46,7 @@ const Leftbar = () => {
           </div>
         ) : (
           <Link
-            to={isAuthenticated ? `/profile/${user.accountId}` : "/sign-in"}
+            to={isAuthenticated ? `/user/${user.accountId}` : "/sign-in"}
             className={
               !isAuthenticated
                 ? "bg-zinc-900/800 dark:bg-gray-800 dark:text-zinc-100 text-white px-5 py-1.5 rounded-md font-semibold mt-2.5 mb-1.5 flex gap-3 items-center"
