@@ -46,8 +46,8 @@ function PostDetails() {
   }
 
   return (
-    <div className="common-container w-full">
-      <div className="post-card p-4 bg-white shadow-md rounded-lg mb-4 relative w-full ">
+    <div className="common-container">
+      <div className="post-card p-4 bg-white shadow-md rounded-lg mb-4 relative">
         <div className="flex justify-between items-center">
           <Link
             to={`/user/${post?.postedBy?.$id}`}
