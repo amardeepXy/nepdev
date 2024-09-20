@@ -139,7 +139,7 @@ const PostCard = ({ post, styles }) => {
       { post.imageURL &&
       <img
         src={post.imageURL || "/assets/images/post-placeholder.svg"}
-        className="rounded-lg mb-2 object-center object-cover h-64"
+        className="w-full rounded-lg mb-2 object-center object-cover h-64"
         alt="post"
       />}
       </Link>
