@@ -101,7 +101,7 @@ function PostDetails() {
           {post?.imageURL && (
             <img
               src={post?.imageURL || "/assets/images/post-placeholder.svg"}
-              className="w-full rounded-lg mb-2 object-center "
+              className="rounded-lg mb-2 object-center "
               alt="post"
             />
           )}
