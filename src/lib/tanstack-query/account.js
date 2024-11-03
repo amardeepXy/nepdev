@@ -57,3 +57,10 @@ export const useGetUserById = (userId) => {
         enabled: !!userId
     })
 }
+
+export const verifyUserByEmail = () => {
+    return useMutation({
+        mutationFn: () => emailVerification(),
+        onSuccess: (data) => console.log(data)
+    });
+}

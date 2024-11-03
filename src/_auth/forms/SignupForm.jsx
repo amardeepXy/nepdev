@@ -64,7 +64,6 @@ const SignupForm = () => {
   }, [isUserLoggedIn]);
 
   const onSubmit = async (data) =>{
-    console.log(data);
     const { name, username, email, password } = data;
     try {
       const newUser = await createUserAccount({ name, username, email, password });
@@ -72,7 +71,6 @@ const SignupForm = () => {
       const sessoin = await loginUser({ email, password });
       if(!sessoin) throw new Error('Failed to login');
     } catch (error) {
-      console.log(error);
       toast({title: error.title, description: error.message, variant: 'destructive'});
     }
     

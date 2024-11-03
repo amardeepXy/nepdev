@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { login, setLoading } from "../lib/redux/features/authSlice";
 import { getAccount, getUserFromDb, logout } from "@/lib/appwrite/api";
 import { QUERY_KEYS } from "@/lib/tanstack-query/queryKeys";
+import { useNavigate } from "react-router-dom";
 
 export const useAutoLogin = () => {
     const [makeRequest, setMakeRequest] = useState(false);
@@ -17,11 +18,10 @@ export const useAutoLogin = () => {
     
     useEffect(() => {
         if (!makeRequest) return;
-        console.log('i am custom hook useAutoLogin really fetching current user form database');
         dispatch(setLoading(true));
         getAccount().then(data =>{
+
             getUserFromDb(data.$id).then(user => {
-                console.log(user);
                 if(user.total === 0){
                     logout('current');
                     setSucces(false);
@@ -42,4 +42,8 @@ export const useAutoLogin = () => {
         setRequest,
         isSuccess
     }
+}
+
+function handleUnverfiedUser(userDetails){
+    
 }

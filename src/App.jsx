@@ -14,10 +14,8 @@ import './global.css';
 
 const App = () => {
   const dispatch = useDispatch();
-  console.log('this is an app component', );
   const {setRequest} = useAutoLogin();
   useEffect(() => {
-    console.log(localStorage.getItem('mode'))
     if (localStorage.getItem('mode') === 'dark') {
       dispatch(toggleMode());
     }

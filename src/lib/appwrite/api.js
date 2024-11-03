@@ -334,11 +334,14 @@ export async function getUserById(userId){
     }
 }
 
-// export async function getAllPostOfUser(userId){
-//     if(!userId) throw new Error('Must need user id to get user\'s all post ');
-//     try {
-//         database.listDocuments
-//     } catch (error) {
-        
-//     }
-// }
+export async function emailVerification(email) {
+
+    // Return if email is not provided
+    if(!email) throw new Error('Email is required');
+
+    try {
+        return await account.createVerification(window.location.origin+'verify-email');
+    } catch (error) {
+        throw new Error(error.message || 'Uknown error');
+    }
+}
