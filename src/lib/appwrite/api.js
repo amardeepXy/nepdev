@@ -334,13 +334,10 @@ export async function getUserById(userId){
     }
 }
 
-export async function emailVerification(email) {
-
-    // Return if email is not provided
-    if(!email) throw new Error('Email is required');
+export async function sendVerificationEmail() {
 
     try {
-        return await account.createVerification(window.location.origin+'verify-email');
+        return await account.createVerification(window.location.origin + '/verify-email');
     } catch (error) {
         throw new Error(error.message || 'Uknown error');
     }
