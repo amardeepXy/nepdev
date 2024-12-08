@@ -342,3 +342,12 @@ export async function sendVerificationEmail() {
         throw new Error(error.message || 'Uknown error');
     }
 }
+
+export async function verifyEmailWithSecret({userId, secret}){
+    if(!userId || !secret) throw new Error('User id and secret must be provided');
+    try {
+        return await account.updateVerification(userId, secret);
+    } catch (error) {
+        throw new Error(error.message || 'Uknown error');
+    }
+}

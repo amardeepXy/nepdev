@@ -1,4 +1,4 @@
-import { createUserAccount, signInUser, getAccount, logout, getUserFromDb, getAllUsers, getUserById, sendVerificationEmail } from '../appwrite/api';
+import { createUserAccount, signInUser, getAccount, logout, getUserFromDb, getAllUsers, getUserById, sendVerificationEmail, verifyEmailWithSecret } from '../appwrite/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from './queryKeys';
 
@@ -61,6 +61,11 @@ export const useGetUserById = (userId) => {
 export const useSendUserVerificationEmail = () => {
     return useMutation({
         mutationFn: sendVerificationEmail,
-        onSuccess: (data) => console.log(data)
+    });
+}
+
+export const useVerifyEmailWithSecret = () => {
+    return useMutation({
+        mutationFn: verifyEmailWithSecret
     });
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login, setLoading } from "../lib/redux/features/authSlice";
 import { loadUserData } from "../lib/redux/features/userVerificationSlice";
 import { getAccount, getUserFromDb, logout } from "@/lib/appwrite/api";
@@ -13,6 +13,7 @@ export const useAutoLogin = () => {
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isUserVerficationLoading = useSelector(state => state.userVerification.isLoading);
     
     function setRequest(){
         setMakeRequest(true);
@@ -27,7 +28,8 @@ export const useAutoLogin = () => {
         if (!makeRequest) return;
         dispatch(setLoading(true));
         getAccount().then(data =>{
-            if(!data.emailVerification) {
+            console.log(data);
+            if( !data.emailVerification) {
                 handleUnverfiedUser(data);
             }
             getUserFromDb(data.$id).then(user => {
@@ -51,8 +53,4 @@ export const useAutoLogin = () => {
         setRequest,
         isSuccess
     }
-}
-
-function handleUnverfiedUser(userDetails){
-    
 }

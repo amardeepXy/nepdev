@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Authlayout from "./_auth/Authlayout";
 import RootLayout from "./_root/RootLayout";
 import VerificationLayout from "./components/layouts/VerificationLayout";
-import { SigninForm, SignupForm, EmailVerification } from "./_auth/forms";
+import { SigninForm, SignupForm, EmailVerification, EmailVerifyRedirection } from "./_auth/forms";
 import {
   Home,
   Explore,
@@ -40,6 +40,7 @@ const App = () => {
         </Route>
         <Route element={<VerificationLayout />}>
         <Route path="/email-verfication" element={<EmailVerification />} />
+        <Route path={"/verify-email"} element={<EmailVerifyRedirection />} />
         </Route>
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
