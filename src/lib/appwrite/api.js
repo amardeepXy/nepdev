@@ -1,7 +1,7 @@
 import { account, database, avatar, ID, appwriteConfig, storage} from "./config.appwrite";
 import { Query } from 'appwrite';
 
-const {databaseId, usersCollectionID, postsCollectionID, bucketID, savesCollectionID} = appwriteConfig;
+const {databaseId, usersCollectionID, postsCollectionID, bucketID, savesCollectionID, commentsCollectionID} = appwriteConfig;
 
 export async function createUserAccount ( data ){
     const { name, username, email, password } = data;
@@ -342,3 +342,9 @@ export async function getUserById(userId){
         
 //     }
 // }
+
+export async function getCommentsByPostId(postId, offSet){
+    if(!postId || !offSet) throw new Error("Unknown post, -application error");
+    const query = [ Query.and([Query.equal("post", postId), Query.isNull("parentCommentId")])];
+    return await database.listDocuments(databaseId, commentsCollectionID, query);
+}

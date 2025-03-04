@@ -348,6 +348,11 @@
   .shad-button_ghost {
     @apply flex gap-4 px-0 ml-20 items-center justify-start hover:bg-transparent hover:text-white !important;
   }
+
+  /* application components */
+  .each_comment{
+    @apply w-full flex;
+  }
 }
 
 @layer base {

@@ -36,3 +36,7 @@ export const createPostSchema = z.object({
   tags: z.string().min(3, { message: "Tags must be at least 3 characters long" }),
   location: z.string(),
 });
+
+export const createComment = z.object({
+  content: z.string().min(1, {message: "comment should be atleast 1 character long"})
+})

@@ -49,7 +49,6 @@ export const useSavePost = () =>{
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: ({postId, userId, operation}) => {
-            console.log(postId, userId, operation);
             return savePost(postId, userId, operation);
         }, 
         onSuccess: (data) =>{
