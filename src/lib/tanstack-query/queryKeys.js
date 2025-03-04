@@ -17,5 +17,8 @@ export const QUERY_KEYS ={
   GET_SAVED_POST: "getSavedPost",
 
   //  SEARCH KEYS
-  SEARCH_POSTS :"getSearchPosts"
+  SEARCH_POSTS :"getSearchPosts",
+
+  // COMMENTS KEYS
+  GET_POST_COMMENT: "getCommentsByPostId"
 }

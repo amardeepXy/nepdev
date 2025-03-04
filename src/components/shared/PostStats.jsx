@@ -7,6 +7,8 @@ import { useGetUserFromDb } from "@/lib/tanstack-query/account";
 import { useToast, ToastAction } from "../ui";
 import { Button } from "../ui";
 import { inArray } from "@/lib/utils";
+import { Dialog, DialogHeader, DialogContent, DialogTrigger, DialogTitle } from "../ui/dialog";
+import { CommentContainer } from "./comments";
 
 const PostStats = ({ post, toHide=[] }) => {
   const navigate = useNavigate();
@@ -103,10 +105,23 @@ const PostStats = ({ post, toHide=[] }) => {
         <span className="ml-1.5 text-xl">{postLikers.length}</span>
       </Button>
 
-      <Button variant="ghost" className={`shad-btn_ghost ${inArray(toHide, 2) ===2 && 'hidden'}`}>
+{/* // comment button */}
+      <Dialog>
+        <DialogTrigger className={`${inArray(toHide, 2) ===2 && 'hidden'}`} asChild >
+      <Button variant="ghost" className={`shad-btn_ghost `}>
         <MessageCircleMore />
         <span className="ml-1.5 text-xl">{post.comment?.length}</span>
       </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[525px]" >
+          <DialogHeader>
+            <DialogTitle>
+              Comments
+            </DialogTitle>
+          </DialogHeader>
+        <CommentContainer post={post} />
+        </DialogContent>
+      </Dialog>
 
       <Button variant="ghost" className={`shad-btn_ghost ${inArray(toHide, 3) === 3 && 'hidden'}`} onClick={handleSavePost}>
         <img
